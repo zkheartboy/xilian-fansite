@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const categories = [
+  { id: 'all', name: '全部' },
+  { id: 'character', name: '角色' },
+  { id: 'wallpaper', name: '壁纸' },
+  { id: 'meme', name: '表情包' },
+];
+
+const images = [
+  { id: 1, category: 'character', src: 'https://picsum.photos/400/600?random=1', title: '角色立绘' },
+  { id: 2, category: 'character', src: 'https://picsum.photos/400/600?random=2', title: '战斗画面' },
+  { id: 3, category: 'wallpaper', src: 'https://picsum.photos/1920/1080?random=3', title: '高清壁纸1' },
+  { id: 4, category: 'wallpaper', src: 'https://picsum.photos/1920/1080?random=4', title: '高清壁纸2' },
+  { id: 5, category: 'character', src: 'https://picsum.photos/400/600?random=5', title: '角色表情' },
+  { id: 6, category: 'meme', src: 'https://picsum.photos/300/300?random=6', title: '表情包1' },
+  { id: 7, category: 'wallpaper', src: 'https://picsum.photos/1920/1080?random=7', title: '高清壁纸3' },
+  { id: 8, category: 'character', src: 'https://picsum.photos/400/600?random=8', title: 'cv配音' },
+  { id: 9, category: 'meme', src: 'https://picsum.photos/300/300?random=9', title: '表情包2' },
+];
+---
+
+<Layout title="图片库">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-4">图片库</h1>
+    <p class="text-gray-400 mb-8">收录昔涟的高清图片、壁纸、表情包</p>
+
+    <!-- Categories -->
+    <div class="flex gap-4 mb-8 overflow-x-auto pb-4">
+      {categories.map((cat) => (
+        <button 
+          class={`px-6 py-2 rounded-full whitespace-nowrap category-btn ${cat.id === 'all' ? 'bg-xilian-purple' : 'bg-gray-800 hover:bg-gray-700'} transition`}
+          data-category={cat.id}
+        >
+          {cat.name}
+        </button>
+      ))}
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery">
+      {images.map((img) => (
+        <div class="gallery-item aspect-square bg-gray-800 rounded-xl overflow-hidden cursor-pointer hover:transform hover:scale-105 transition" data-category={img.category}>
+          <img 
+            src={img.src} 
+            alt={img.title}
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div class="p-2 text-center text-sm text-gray-400">{img.title}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Load More -->
+    <div class="text-center mt-12">
+      <button class="px-8 py-3 bg-gray-800 rounded-full hover:bg-gray-700 transition">
+        加载更多
+      </button>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const categoryBtns = document.querySelectorAll('.category-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-category');
+      
+      // Update button state
+      categoryBtns.forEach(b => b.classList.remove('bg-xilian-purple'));
+      categoryBtns.forEach(b => b.classList.add('bg-gray-800'));
+      btn.classList.remove('bg-gray-800');
+      btn.classList.add('bg-xilian-purple');
+      
+      // Filter items
+      galleryItems.forEach(item => {
+        if (category === 'all' || item.getAttribute('data-category') === category) {
+          (item as HTMLElement).style.display = 'block';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

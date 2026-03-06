@@ -1,0 +1,112 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const videos = [
+  {
+    id: 1,
+    title: "昔涟角色演示",
+    description: "来自星尘官方角色演示——昔涟",
+    thumbnail: "https://picsum.photos/640/360?random=10",
+    type: "official",
+    bvid: "BV1xxx111"
+  },
+  {
+    id: 2,
+    title: "昔涟技能演示",
+    description: "全技能展示与解析",
+    thumbnail: "https://picsum.photos/640/360?random=11",
+    type: "gameplay",
+    bvid: "BV1xxx222"
+  },
+  {
+    id: 3,
+    title: "昔涟毕业配队",
+    description: "最强配队与遗器推荐",
+    thumbnail: "https://picsum.photos/640/360?random=12",
+    type: "guide",
+    bvid: "BV1xxx333"
+  },
+  {
+    id: 4,
+    title: "来自星尘 4.0 预告",
+    description: "新版本内容抢先看",
+    thumbnail: "https://picsum.photos/640/360?random=13",
+    type: "official",
+    bvid: "BV1xxx444"
+  },
+  {
+    id: 5,
+    title: "阿尔林铎探索指南",
+    description: "新地图完全攻略",
+    thumbnail: "https://picsum.photos/640/360?random=14",
+    type: "guide",
+    bvid: "BV1xxx555"
+  },
+  {
+    id: 6,
+    title: "剧情回顾：昔涟篇",
+    description: "昔涟主线剧情合集",
+    thumbnail: "https://picsum.photos/640/360?random=15",
+    type: "story",
+    bvid: "BV1xxx666"
+  }
+];
+
+const typeLabels: Record<string, string> = {
+  official: "官方",
+  gameplay: "游戏视频",
+  guide: "攻略",
+  story: "剧情"
+};
+---
+
+<Layout title="视频库">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-4">视频库</h1>
+    <p class="text-gray-400 mb-8">昔涟相关的视频内容集合</p>
+
+    <!-- Video Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {videos.map((video) => (
+        <article class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-[1.02] transition">
+          <div class="relative aspect-video bg-gray-700">
+            <img 
+              src={video.thumbnail} 
+              alt={video.title}
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-16 h-16 bg-xilian-purple/80 rounded-full flex items-center justify-center">
+                <span class="text-3xl">▶️</span>
+              </div>
+            </div>
+            <span class="absolute top-2 right-2 px-2 py-1 bg-black/70 rounded text-xs">
+              {typeLabels[video.type]}
+            </span>
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-bold mb-2">{video.title}</h3>
+            <p class="text-gray-400 text-sm">{video.description}</p>
+            <a 
+              href={`https://www.bilibili.com/video/${video.bvid}`}
+              target="_blank"
+              class="inline-block mt-3 text-xilian-purple hover:underline text-sm"
+            >
+              在B站观看 →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Notice -->
+    <div class="mt-12 p-6 bg-gray-800 rounded-xl">
+      <h3 class="text-lg font-bold mb-2">📌 观看说明</h3>
+      <ul class="text-gray-400 space-y-2">
+        <li>• 点击视频封面可在B站观看完整视频</li>
+        <li>• 视频内容版权归属米哈游及上传者</li>
+        <li>• 如有侵权请联系删除</li>
+      </ul>
+    </div>
+  </div>
+</Layout>

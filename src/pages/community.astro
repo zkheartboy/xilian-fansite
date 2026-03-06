@@ -1,0 +1,103 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const fanarts = [
+  {
+    id: 1,
+    title: "昔涟 - 星空下的少女",
+    author: "画师：星辰大海",
+    type: "绘画",
+    likes: 1234
+  },
+  {
+    id: 2,
+    title: "Q版昔涟表情包",
+    author: "画师：可可爱爱",
+    type: "表情包",
+    likes: 892
+  },
+  {
+    id: 3,
+    title: "昔涟Cosplay",
+    author: "Coser：次元突破",
+    type: "Cosplay",
+    likes: 2341
+  },
+  {
+    id: 4,
+    title: "手工：昔涟黏土人",
+    author: "手工达人",
+    type: "手工",
+    likes: 567
+  }
+];
+---
+
+<Layout title="社区">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-4">粉丝社区</h1>
+    <p class="text-gray-400 mb-8">与同好交流，分享你的创作</p>
+
+    <!-- Community Links -->
+    <div class="grid md:grid-cols-3 gap-6 mb-12">
+      <a href="https://tieba.baidu.com/f?kw=%E6%98%AF%E5%BD%90%E6%98%9F%E9%81%93" target="_blank" class="bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition">
+        <h3 class="text-xl font-bold mb-2">百度贴吧</h3>
+        <p class="text-gray-400">来自星尘贴吧</p>
+      </a>
+      <a href="https://www.miyoushe.com/sr/" target="_blank" class="bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition">
+        <h3 class="text-xl font-bold mb-2">米游社</h3>
+        <p class="text-gray-400">官方社区</p>
+      </a>
+      <a href="https://github.com" target="_blank" class="bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition">
+        <h3 class="text-xl font-bold mb-2">GitHub</h3>
+        <p class="text-gray-400">项目仓库</p>
+      </a>
+    </div>
+
+    <!-- Fan Art Section -->
+    <section class="mb-12">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold">粉丝创作</h2>
+        <button class="px-6 py-2 bg-xilian-purple rounded-full hover:bg-xilian-purple/80 transition">
+          投稿作品
+        </button>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {fanarts.map((art) => (
+          <div class="bg-gray-800 rounded-xl overflow-hidden">
+            <div class="aspect-square bg-gradient-to-br from-xilian-purple/30 to-xilian-pink/30 flex items-center justify-center">
+              <span class="text-6xl">🎨</span>
+            </div>
+            <div class="p-4">
+              <h3 class="font-bold mb-1">{art.title}</h3>
+              <p class="text-gray-400 text-sm mb-2">{art.author}</p>
+              <div class="flex justify-between items-center">
+                <span class="text-xs px-2 py-1 bg-gray-700 rounded">{art.type}</span>
+                <span class="text-gray-400 text-sm">❤️ {art.likes}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Giscus Comments -->
+    <section>
+      <h2 class="text-3xl font-bold mb-8">留言评论</h2>
+      <div class="bg-gray-800 rounded-xl p-8 text-center">
+        <p class="text-gray-400 mb-4">评论系统即将上线</p>
+        <p class="text-sm text-gray-500">
+          我们将使用 Giscus 评论系统，基于 GitHub Discussions 实现
+        </p>
+        <a 
+          href="https://github.com/giscus/giscus"
+          target="_blank"
+          class="inline-block mt-4 text-xilian-purple hover:underline"
+        >
+          了解更多 →
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>
