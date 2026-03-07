@@ -5,6 +5,8 @@ interface Props {
 }
 
 const { title, description = "昔涟 Xilian 应援网站 - 来自星尘" } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL || '/';
+const base = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
 ---
 
 <!doctype html>
@@ -19,16 +21,16 @@ const { title, description = "昔涟 Xilian 应援网站 - 来自星尘" } = Ast
   <body class="bg-gray-900 text-gray-100 min-h-screen">
     <header class="fixed top-0 w-full bg-gray-900/90 backdrop-blur-sm z-50 border-b border-gray-800">
       <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="/" class="text-2xl font-bold bg-gradient-to-r from-xilian-purple to-xilian-pink bg-clip-text text-transparent">
+        <a href={base} class="text-2xl font-bold bg-gradient-to-r from-xilian-purple to-xilian-pink bg-clip-text text-transparent">
           昔涟应援站
         </a>
         <ul class="flex gap-6">
-          <li><a href="/" class="hover:text-xilian-purple transition">首页</a></li>
-          <li><a href="/about" class="hover:text-xilian-purple transition">角色</a></li>
-          <li><a href="/gallery" class="hover:text-xilian-purple transition">图库</a></li>
-          <li><a href="/videos" class="hover:text-xilian-purple transition">视频</a></li>
-          <li><a href="/news" class="hover:text-xilian-purple transition">资讯</a></li>
-          <li><a href="/community" class="hover:text-xilian-purple transition">社区</a></li>
+          <li><a href={base} class="hover:text-xilian-purple transition">首页</a></li>
+          <li><a href={`${base}about`} class="hover:text-xilian-purple transition">角色</a></li>
+          <li><a href={`${base}gallery`} class="hover:text-xilian-purple transition">图库</a></li>
+          <li><a href={`${base}videos`} class="hover:text-xilian-purple transition">视频</a></li>
+          <li><a href={`${base}news`} class="hover:text-xilian-purple transition">资讯</a></li>
+          <li><a href={`${base}community`} class="hover:text-xilian-purple transition">社区</a></li>
         </ul>
       </nav>
     </header>

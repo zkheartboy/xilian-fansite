@@ -1,28 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { images, categories } from '../content/gallery';
 
-const categories = [
-  { id: 'all', name: '全部' },
-  { id: 'character', name: '角色' },
-  { id: 'wallpaper', name: '壁纸' },
-  { id: 'meme', name: '表情包' },
-];
+const categoryNames: Record<string, string> = {
+  character: '角色',
+  wallpaper: '壁纸',
+  meme: '表情包'
+};
 
-const images = [
-  { id: 1, category: 'character', src: 'https://picsum.photos/400/600?random=1', title: '角色立绘' },
-  { id: 2, category: 'character', src: 'https://picsum.photos/400/600?random=2', title: '战斗画面' },
-  { id: 3, category: 'wallpaper', src: 'https://picsum.photos/1920/1080?random=3', title: '高清壁纸1' },
-  { id: 4, category: 'wallpaper', src: 'https://picsum.photos/1920/1080?random=4', title: '高清壁纸2' },
-  { id: 5, category: 'character', src: 'https://picsum.photos/400/600?random=5', title: '角色表情' },
-  { id: 6, category: 'meme', src: 'https://picsum.photos/300/300?random=6', title: '表情包1' },
-  { id: 7, category: 'wallpaper', src: 'https://picsum.photos/1920/1080?random=7', title: '高清壁纸3' },
-  { id: 8, category: 'character', src: 'https://picsum.photos/400/600?random=8', title: 'cv配音' },
-  { id: 9, category: 'meme', src: 'https://picsum.photos/300/300?random=9', title: '表情包2' },
-];
+// 处理图片路径，确保在 base URL 下正确加载
+const getImagePath = (src: string) => {
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  const base = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+  if (src.startsWith('/')) {
+    return `${base}${src.slice(1)}`;
+  }
+  return `${base}${src}`;
+};
 ---
 
 <Layout title="图片库">
-  <div class="max-w-6xl mx-auto px-4 py-12">
+  <div class="max-w-7xl mx-auto px-4 py-12">
     <h1 class="text-4xl font-bold mb-4">图片库</h1>
     <p class="text-gray-400 mb-8">收录昔涟的高清图片、壁纸、表情包</p>
 
@@ -30,7 +28,7 @@ const images = [
     <div class="flex gap-4 mb-8 overflow-x-auto pb-4">
       {categories.map((cat) => (
         <button 
-          class={`px-6 py-2 rounded-full whitespace-nowrap category-btn ${cat.id === 'all' ? 'bg-xilian-purple' : 'bg-gray-800 hover:bg-gray-700'} transition`}
+          class={`px-6 py-2 rounded-full whitespace-nowrap category-btn ${cat.id === 'all' ? 'bg-xilian-purple text-white' : 'bg-gray-800 hover:bg-gray-700 text-gray-300'} transition`}
           data-category={cat.id}
         >
           {cat.name}
@@ -39,30 +37,206 @@ const images = [
     </div>
 
     <!-- Gallery Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gallery">
       {images.map((img) => (
-        <div class="gallery-item aspect-square bg-gray-800 rounded-xl overflow-hidden cursor-pointer hover:transform hover:scale-105 transition" data-category={img.category}>
-          <img 
-            src={img.src} 
-            alt={img.title}
-            class="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div class="p-2 text-center text-sm text-gray-400">{img.title}</div>
+        <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden cursor-pointer hover:transform hover:scale-[1.02] transition group" data-category={img.category}>
+          <div class="relative aspect-[2/3] bg-gray-700">
+            <img 
+              src={getImagePath(img.src)} 
+              alt={img.title}
+              class="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
+              <span class="text-white text-sm">{img.title}</span>
+            </div>
+            <span class="absolute top-2 right-2 px-2 py-1 bg-black/50 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition">
+              {categoryNames[img.category] || img.category}
+            </span>
+          </div>
+          <div class="p-3 text-center">
+            <h3 class="text-sm font-medium text-gray-300 group-hover:text-xilian-purple transition">{img.title}</h3>
+          </div>
         </div>
       ))}
     </div>
 
     <!-- Load More -->
     <div class="text-center mt-12">
-      <button class="px-8 py-3 bg-gray-800 rounded-full hover:bg-gray-700 transition">
+      <button class="px-8 py-3 bg-gray-800 rounded-full hover:bg-gray-700 transition font-medium">
         加载更多
       </button>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center p-4">
+    <button 
+      class="absolute top-4 right-4 text-white/70 hover:text-white text-4xl font-bold z-10"
+      id="closeBtn"
+      aria-label="关闭"
+    >
+      &times;
+    </button>
+    <button 
+      class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl font-bold z-10"
+      id="prevBtn"
+      aria-label="上一张"
+    >
+      &#10094;
+    </button>
+    <button 
+      class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl font-bold z-10"
+      id="nextBtn"
+      aria-label="下一张"
+    >
+      &#10095;
+    </button>
+    <div class="max-w-full max-h-full flex flex-col items-center">
+      <img 
+        id="modalImage" 
+        src="" 
+        alt="" 
+        class="max-w-full max-h-[85vh] object-contain"
+      />
+      <p id="modalCaption" class="text-white text-center mt-4 text-lg"></p>
+      <p id="modalCategory" class="text-gray-400 text-sm mt-2"></p>
     </div>
   </div>
 </Layout>
 
 <script>
+  // 图片数据
+  const imageData = [
+    { src: '/images/gallery/character1.jpg', title: '角色立绘 - 昔涟', category: 'character' },
+    { src: '/images/gallery/character2.jpg', title: '战斗画面 - 昔涟', category: 'character' },
+    { src: '/images/gallery/wallpaper1.jpg', title: '高清壁纸 - 星空', category: 'wallpaper' },
+    { src: '/images/gallery/wallpaper2.jpg', title: '高清壁纸 - 官宣', category: 'wallpaper' },
+    { src: '/images/gallery/character3.jpg', title: '角色表情 - 微笑', category: 'character' },
+    { src: '/images/gallery/meme1.jpg', title: '表情包 - 你好呀', category: 'meme' },
+    { src: '/images/gallery/wallpaper3.jpg', title: '高清壁纸 - 梦境', category: 'wallpaper' },
+    { src: '/images/gallery/character4.jpg', title: 'CV 配音 - 宴宁', category: 'character' },
+    { src: '/images/gallery/meme2.jpg', title: '表情包 - 撒娇', category: 'meme' },
+    { src: '/images/gallery/character5.jpg', title: '角色立绘 - 双形态', category: 'character' },
+    { src: '/images/gallery/wallpaper4.jpg', title: '高清壁纸 - 官宣 2', category: 'wallpaper' },
+    { src: '/images/gallery/meme3.jpg', title: '表情包 - 人家', category: 'meme' },
+    { src: '/images/gallery/character6.jpg', title: '战斗立绘 - 昔涟', category: 'character' },
+    { src: '/images/gallery/wallpaper5.jpg', title: '高清壁纸 - 情侣', category: 'wallpaper' },
+    { src: '/images/gallery/meme4.jpg', title: '表情包 - 惊喜', category: 'meme' },
+    { src: '/images/gallery/character7.jpg', title: '角色立绘 - 成熟版', category: 'character' },
+    { src: '/images/gallery/wallpaper6.jpg', title: '高清壁纸 - 官宣 3', category: 'wallpaper' },
+    { src: '/images/gallery/meme5.jpg', title: '表情包 - 害羞', category: 'meme' },
+    { src: '/images/gallery/character8.jpg', title: '技能立绘 - 结界', category: 'character' },
+    { src: '/images/gallery/wallpaper7.jpg', title: '高清壁纸 - 官宣 4', category: 'wallpaper' },
+    { src: '/images/gallery/meme6.jpg', title: '表情包 - 认真', category: 'meme' },
+    { src: '/images/gallery/character9.jpg', title: '角色立绘 - 迷迷', category: 'character' },
+    { src: '/images/gallery/wallpaper8.jpg', title: '高清壁纸 - 官宣 5', category: 'wallpaper' },
+    { src: '/images/gallery/meme7.jpg', title: '表情包 - 开心', category: 'meme' }
+  ];
+
+  const categoryNames = {
+    character: '角色',
+    wallpaper: '壁纸',
+    meme: '表情包'
+  };
+
+  let currentImageIndex = 0;
+  let filteredImages = [];
+
+  // 获取图片路径
+  const getImagePath = (src) => {
+    const baseUrl = window.location.pathname.split('/').slice(0, -1).join('/') || '/';
+    const base = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+    if (src.startsWith('/')) {
+      return `${base}${src.slice(1)}`;
+    }
+    return `${base}${src}`;
+  };
+
+  // 初始化过滤后的图片列表
+  const updateFilteredImages = () => {
+    const visibleItems = document.querySelectorAll('.gallery-item[style="display: block;"], .gallery-item:not([style*="display"])');
+    filteredImages = Array.from(visibleItems).map(item => ({
+      src: item.querySelector('img').src,
+      title: item.querySelector('h3').textContent,
+      category: item.getAttribute('data-category')
+    }));
+  };
+
+  // 打开模态框
+  const openModal = (index) => {
+    updateFilteredImages();
+    currentImageIndex = index;
+    showImage(currentImageIndex);
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+
+  // 关闭模态框
+  const closeModal = () => {
+    const modal = document.getElementById('imageModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+
+  // 显示图片
+  const showImage = (index) => {
+    if (filteredImages.length === 0) return;
+    
+    // 处理索引循环
+    if (index < 0) index = filteredImages.length - 1;
+    if (index >= filteredImages.length) index = 0;
+    
+    currentImageIndex = index;
+    const img = filteredImages[currentImageIndex];
+    
+    document.getElementById('modalImage').src = img.src;
+    document.getElementById('modalImage').alt = img.title;
+    document.getElementById('modalCaption').textContent = img.title;
+    document.getElementById('modalCategory').textContent = categoryNames[img.category] || img.category;
+  };
+
+  // 上一张
+  const previousImage = () => {
+    showImage(currentImageIndex - 1);
+  };
+
+  // 下一张
+  const nextImage = () => {
+    showImage(currentImageIndex + 1);
+  };
+
+  // 模态框事件绑定
+  const modal = document.getElementById('imageModal');
+  const closeBtn = document.getElementById('closeBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  // 点击关闭按钮
+  closeBtn.addEventListener('click', closeModal);
+
+  // 点击上一张/下一张
+  prevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    previousImage();
+  });
+  
+  nextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    nextImage();
+  });
+
+  // 点击背景关闭
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // 分类筛选
   const categoryBtns = document.querySelectorAll('.category-btn');
   const galleryItems = document.querySelectorAll('.gallery-item');
 
@@ -70,13 +244,13 @@ const images = [
     btn.addEventListener('click', () => {
       const category = btn.getAttribute('data-category');
       
-      // Update button state
-      categoryBtns.forEach(b => b.classList.remove('bg-xilian-purple'));
-      categoryBtns.forEach(b => b.classList.add('bg-gray-800'));
-      btn.classList.remove('bg-gray-800');
-      btn.classList.add('bg-xilian-purple');
+      categoryBtns.forEach(b => {
+        b.classList.remove('bg-xilian-purple', 'text-white');
+        b.classList.add('bg-gray-800', 'text-gray-300');
+      });
+      btn.classList.remove('bg-gray-800', 'text-gray-300');
+      btn.classList.add('bg-xilian-purple', 'text-white');
       
-      // Filter items
       galleryItems.forEach(item => {
         if (category === 'all' || item.getAttribute('data-category') === category) {
           (item as HTMLElement).style.display = 'block';
@@ -84,6 +258,32 @@ const images = [
           (item as HTMLElement).style.display = 'none';
         }
       });
+      
+      updateFilteredImages();
     });
   });
+
+  // 为每个图片添加点击事件
+  galleryItems.forEach((item, index) => {
+    item.addEventListener('click', () => {
+      updateFilteredImages();
+      const visibleIndex = Array.from(galleryItems).filter(i => 
+        i.style.display !== 'none'
+      ).indexOf(item);
+      openModal(visibleIndex);
+    });
+  });
+
+  // 键盘导航
+  document.addEventListener('keydown', (e) => {
+    const modal = document.getElementById('imageModal');
+    if (modal.classList.contains('hidden')) return;
+    
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') previousImage();
+    if (e.key === 'ArrowRight') nextImage();
+  });
+
+  // 初始化
+  updateFilteredImages();
 </script>

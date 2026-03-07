@@ -1,50 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const news = [
-  {
-    id: 1,
-    title: "昔涟角色攻略——从入门到精通",
-    date: "2026-03-01",
-    category: "攻略",
-    excerpt: "全面解析昔涟的技能机制、遗器搭配、光锥选择与配队建议..."
-  },
-  {
-    id: 2,
-    title: "来自星尘 4.0 版本更新内容",
-    date: "2026-02-15",
-    category: "资讯",
-    excerpt: "新版本带来全新剧情、新角色、新地图，还有丰富的活动奖励..."
-  },
-  {
-    id: 3,
-    title: "阿尔林铎探索指南",
-    date: "2026-02-01",
-    category: "攻略",
-    excerpt: "新地图探索要点、隐藏要素、收集品位置全收录..."
-  },
-  {
-    id: 4,
-    title: "昔涟语音合集：那些触动人心的台词",
-    date: "2026-01-20",
-    category: "二创",
-    excerpt: "整理了昔涟在游戏中的所有语音，一起来感受角色的魅力..."
-  },
-  {
-    id: 5,
-    title: "来自星尘 × 必胜客联动开启",
-    date: "2026-01-10",
-    category: "活动",
-    excerpt: "联动套餐、限定周边、主题门店...更多惊喜等你来发现！"
-  },
-  {
-    id: 6,
-    title: "玩家同人作品展示：第一期",
-    date: "2026-01-01",
-    category: "二创",
-    excerpt: "精选社区内的优质同人创作，绘画、Cos、手工..."
-  }
-];
+import { news } from '../content/news';
 
 const categoryColors: Record<string, string> = {
   资讯: "bg-blue-600",
@@ -62,26 +18,38 @@ const categoryColors: Record<string, string> = {
     <!-- News List -->
     <div class="space-y-6">
       {news.map((item) => (
-        <article class="bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition">
-          <div class="flex flex-col md:flex-row md:items-center gap-4">
-            <div class="flex-1">
-              <div class="flex items-center gap-3 mb-2">
-                <span class={`px-3 py-1 rounded-full text-xs ${categoryColors[item.category] || 'bg-gray-600'}`}>
-                  {item.category}
-                </span>
-                <span class="text-gray-400 text-sm">{item.date}</span>
+        <article class="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-750 transition hover:transform hover:scale-[1.01]">
+          <div class="p-6">
+            <div class="flex flex-wrap items-center gap-4 mb-4">
+              <span class={`px-4 py-2 rounded-full text-sm font-semibold ${categoryColors[item.category] || 'bg-gray-600'}`}>
+                {item.category}
+              </span>
+              <span class="text-gray-400 text-sm flex items-center gap-1">
+                <span>📅</span>
+                {item.date}
+              </span>
+              <div class="flex gap-2 ml-auto">
+                {item.tags?.map((tag) => (
+                  <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-400">#{tag}</span>
+                ))}
               </div>
-              <h2 class="text-xl font-bold mb-2 hover:text-xilian-purple">
-                <a href="#">{item.title}</a>
-              </h2>
-              <p class="text-gray-400">{item.excerpt}</p>
             </div>
-            <a 
-              href="#"
-              class="px-6 py-2 bg-xilian-purple rounded-full hover:bg-xilian-purple/80 transition whitespace-nowrap"
-            >
-              阅读全文
-            </a>
+            <h2 class="text-2xl font-bold mb-3 hover:text-xilian-purple transition">
+              <a href="#">{item.title}</a>
+            </h2>
+            <p class="text-gray-300 mb-4">{item.excerpt}</p>
+            <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-700">
+              <a 
+                href="#"
+                class="px-6 py-2 bg-xilian-purple rounded-full hover:bg-xilian-purple/80 transition whitespace-nowrap font-medium"
+              >
+                阅读全文
+              </a>
+              <span class="text-gray-500 text-sm flex items-center gap-1">
+                <span>👁️</span>
+                {item.views || 0} 阅读
+              </span>
+            </div>
           </div>
         </article>
       ))}
@@ -89,11 +57,11 @@ const categoryColors: Record<string, string> = {
 
     <!-- Pagination -->
     <div class="flex justify-center gap-2 mt-12">
-      <button class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700">上一页</button>
+      <button class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700 transition">上一页</button>
       <button class="px-4 py-2 bg-xilian-purple rounded">1</button>
-      <button class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700">2</button>
-      <button class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700">3</button>
-      <button class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700">下一页</button>
+      <button class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700 transition">2</button>
+      <button class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700 transition">3</button>
+      <button class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700 transition">下一页</button>
     </div>
   </div>
 </Layout>

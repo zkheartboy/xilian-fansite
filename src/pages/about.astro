@@ -1,77 +1,96 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { character } from '../content/characters';
 
-const character = {
-  name: "昔涟",
-  nameEn: "Xilian",
-  title: "星海旅人",
-  rarity: "5",
-  element: "量子",
-  path: "虚无",
-  cv: "中文：唐雅岚 / 日语：羊宫妃那",
-  description: "昔涟是一名来自阿尔林铎的星海旅人，拥有操控时间与空间的神秘能力。她温柔而神秘，似乎隐藏着许多不为人知的秘密。",
-  skills: [
-    {
-      name: "星痕脉冲",
-      type: "普攻",
-      description: "对单体敌人造成量子属性伤害"
-    },
-    {
-      name: "时域折叠",
-      type: "战技",
-      description: "使敌人进入时间减缓状态，行动速度降低"
-    },
-    {
-      name: "虚数回响",
-      type: "终结技",
-      description: "对范围内敌人造成大量量子伤害，并有概率使敌人陷入虚无力场"
-    },
-    {
-      name: "星海旅人",
-      type: "被动",
-      description: "战斗开始时获得护盾，吸收一定量的伤害"
-    }
-  ]
+const skillColors: Record<string, string> = {
+  '战技': 'bg-blue-600',
+  '终结技': 'bg-purple-600',
+  '忆灵技': 'bg-pink-600',
+  '被动': 'bg-gray-600',
+  '普攻': 'bg-green-600'
 };
 ---
 
 <Layout title="角色介绍">
-  <div class="max-w-6xl mx-auto px-4 py-12">
+  <div class="max-w-7xl mx-auto px-4 py-12">
     <!-- Character Header -->
-    <div class="flex flex-col md:flex-row gap-12 items-center mb-16">
-      <div class="w-80 h-96 bg-gradient-to-br from-xilian-purple via-xilian-pink to-xilian-blue rounded-2xl flex items-center justify-center">
-        <span class="text-8xl">👤</span>
+    <div class="flex flex-col lg:flex-row gap-12 items-center mb-16">
+      <div class="w-full lg:w-1/3">
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-gradient-to-r from-xilian-purple via-xilian-pink to-xilian-blue rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+          <div class="relative w-full aspect-[2/3] bg-gradient-to-br from-xilian-purple/20 via-xilian-pink/20 to-xilian-blue/20 rounded-2xl flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-[url('/images/character/hero.webp')] bg-cover bg-center opacity-80"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+            <div class="relative z-10 text-center px-4">
+              <h1 class="text-6xl font-bold mb-2 bg-gradient-to-r from-xilian-purple via-xilian-pink to-xilian-blue bg-clip-text text-transparent">
+                {character.name}
+              </h1>
+              <p class="text-2xl text-gray-300 mb-4">{character.nameEn}</p>
+              <p class="text-xl text-xilian-purple font-medium">{character.title}</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="flex-1">
-        <h1 class="text-5xl font-bold mb-4">{character.name}</h1>
-        <p class="text-2xl text-gray-400 mb-6">{character.nameEn} · {character.title}</p>
-        
-        <div class="flex gap-4 mb-8">
-          <span class="px-4 py-2 bg-xilian-purple rounded-full">⭐ {character.rarity}星</span>
-          <span class="px-4 py-2 bg-xilian-blue rounded-full">⚡ {character.element}</span>
-          <span class="px-4 py-2 bg-gray-700 rounded-full">🔮 {character.path}</span>
+      
+      <div class="w-full lg:w-2/3">
+        <div class="flex flex-wrap gap-4 mb-6">
+          <span class="px-5 py-2.5 bg-xilian-purple rounded-full text-lg font-semibold">⭐ {character.rarity}星</span>
+          <span class="px-5 py-2.5 bg-xilian-blue rounded-full text-lg font-semibold">❄️ {character.element}</span>
+          <span class="px-5 py-2.5 bg-xilian-pink rounded-full text-lg font-semibold">🔮 {character.path}</span>
         </div>
         
-        <p class="text-lg text-gray-300 leading-relaxed">{character.description}</p>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8">
+          {character.description}
+        </p>
         
-        <div class="mt-6">
-          <span class="text-gray-400">CV：</span>
-          <span>{character.cv}</span>
+        <div class="bg-gray-800/50 rounded-xl p-6 mb-8">
+          <h3 class="text-lg font-bold text-gray-400 mb-4">配音阵容</h3>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🇨🇳</span>
+              <div>
+                <span class="text-gray-400 text-sm">中文</span>
+                <p class="text-gray-200 font-medium">{character.cv.zh}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🇯🇵</span>
+              <div>
+                <span class="text-gray-400 text-sm">日文</span>
+                <p class="text-gray-200 font-medium">{character.cv.ja}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🇺🇸</span>
+              <div>
+                <span class="text-gray-400 text-sm">英文</span>
+                <p class="text-gray-200 font-medium">{character.cv.en}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Skills -->
     <section class="mb-16">
-      <h2 class="text-3xl font-bold mb-8">技能介绍</h2>
+      <h2 class="text-4xl font-bold mb-8 text-center">技能介绍</h2>
       <div class="grid md:grid-cols-2 gap-6">
         {character.skills.map((skill) => (
-          <div class="bg-gray-800 rounded-xl p-6">
+          <div class="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition hover:transform hover:scale-[1.02]">
             <div class="flex justify-between items-center mb-4">
-              <h3 class="text-xl font-bold text-xilian-purple">{skill.name}</h3>
-              <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">{skill.type}</span>
+              <h3 class="text-2xl font-bold text-xilian-purple">{skill.name}</h3>
+              <span class={`px-4 py-2 rounded-full text-sm font-semibold ${skillColors[skill.type] || 'bg-gray-600'}`}>
+                {skill.type}
+              </span>
             </div>
-            <p class="text-gray-400">{skill.description}</p>
+            <p class="text-gray-300 mb-4">{skill.description}</p>
+            {skill.detail && (
+              <div class="bg-gray-900/50 rounded-lg p-4 text-sm text-gray-400">
+                <p class="font-medium text-gray-500 mb-2">技能详情：</p>
+                <p>{skill.detail}</p>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -79,36 +98,39 @@ const character = {
 
     <!-- Story -->
     <section class="mb-16">
-      <h2 class="text-3xl font-bold mb-8">背景故事</h2>
-      <div class="bg-gray-800 rounded-xl p-8">
-        <p class="text-gray-300 leading-relaxed mb-4">
-          昔涟来自一个被称为"阿尔林铎"的神秘星球。从很小的时候起，她就能感受到时间与空间的微妙变化。
-        </p>
-        <p class="text-gray-300 leading-relaxed mb-4">
-          在一次意外中，昔涟觉醒了操控时间的能力。这让她成为了星海中的旅人，穿梭于各个星球之间，寻找着属于自己的答案。
-        </p>
-        <p class="text-gray-300 leading-relaxed">
-          她的旅程仍在继续，而每一个她停留的星球，都将留下关于时间与记忆的传说...
-        </p>
+      <h2 class="text-4xl font-bold mb-8 text-center">背景故事</h2>
+      <div class="space-y-6">
+        {character.story.map((section, index) => (
+          <div class="bg-gray-800 rounded-xl p-8 hover:bg-gray-750 transition">
+            <h3 class="text-2xl font-bold text-xilian-purple mb-4">{section.title}</h3>
+            <p class="text-gray-300 leading-relaxed text-lg">{section.content}</p>
+          </div>
+        ))}
       </div>
     </section>
 
     <!-- Quotes -->
     <section>
-      <h2 class="text-3xl font-bold mb-8">角色语录</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <blockquote class="bg-gray-800 rounded-xl p-6 border-l-4 border-xilian-purple">
-          <p class="text-lg italic">"时间就像河流，而我，只是站在岸边的观察者。"</p>
-        </blockquote>
-        <blockquote class="bg-gray-800 rounded-xl p-6 border-l-4 border-xilian-pink">
-          <p class="text-lg italic">"每一颗星星都有自己的故事，你想听吗？"</p>
-        </blockquote>
-        <blockquote class="bg-gray-800 rounded-xl p-6 border-l-4 border-xilian-blue">
-          <p class="text-lg italic">"记忆是最珍贵的宝藏，因为它无法重来。"</p>
-        </blockquote>
-        <blockquote class="bg-gray-800 rounded-xl p-6 border-l-4 border-gray-600">
-          <p class="text-lg italic">"再见，也许是为了更好的重逢。"</p>
-        </blockquote>
+      <h2 class="text-4xl font-bold mb-8 text-center">角色语录</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {character.quotes.map((quote, index) => (
+          <blockquote class="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition group">
+            <div class="flex items-center gap-2 mb-3">
+              {quote.category && (
+                <span class="px-3 py-1 bg-gray-700 rounded-full text-xs text-gray-400">
+                  {quote.category}
+                </span>
+              )}
+            </div>
+            <p class="text-xl italic text-gray-300 mb-4 group-hover:text-xilian-purple transition">
+              "{quote.text}"
+            </p>
+            <div class="flex items-center gap-2 text-gray-500 text-sm">
+              <span>✨</span>
+              <span>第 {index + 1} 句</span>
+            </div>
+          </blockquote>
+        ))}
       </div>
     </section>
   </div>

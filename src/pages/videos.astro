@@ -1,56 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const videos = [
-  {
-    id: 1,
-    title: "昔涟角色演示",
-    description: "来自星尘官方角色演示——昔涟",
-    thumbnail: "https://picsum.photos/640/360?random=10",
-    type: "official",
-    bvid: "BV1xxx111"
-  },
-  {
-    id: 2,
-    title: "昔涟技能演示",
-    description: "全技能展示与解析",
-    thumbnail: "https://picsum.photos/640/360?random=11",
-    type: "gameplay",
-    bvid: "BV1xxx222"
-  },
-  {
-    id: 3,
-    title: "昔涟毕业配队",
-    description: "最强配队与遗器推荐",
-    thumbnail: "https://picsum.photos/640/360?random=12",
-    type: "guide",
-    bvid: "BV1xxx333"
-  },
-  {
-    id: 4,
-    title: "来自星尘 4.0 预告",
-    description: "新版本内容抢先看",
-    thumbnail: "https://picsum.photos/640/360?random=13",
-    type: "official",
-    bvid: "BV1xxx444"
-  },
-  {
-    id: 5,
-    title: "阿尔林铎探索指南",
-    description: "新地图完全攻略",
-    thumbnail: "https://picsum.photos/640/360?random=14",
-    type: "guide",
-    bvid: "BV1xxx555"
-  },
-  {
-    id: 6,
-    title: "剧情回顾：昔涟篇",
-    description: "昔涟主线剧情合集",
-    thumbnail: "https://picsum.photos/640/360?random=15",
-    type: "story",
-    bvid: "BV1xxx666"
-  }
-];
+import { videos, videoCategories } from '../content/videos';
 
 const typeLabels: Record<string, string> = {
   official: "官方",
@@ -58,39 +8,81 @@ const typeLabels: Record<string, string> = {
   guide: "攻略",
   story: "剧情"
 };
+
+const formatNumber = (num: number) => {
+  if (num >= 10000) {
+    return (num / 10000).toFixed(1) + '万';
+  }
+  return num.toString();
+};
 ---
 
 <Layout title="视频库">
-  <div class="max-w-6xl mx-auto px-4 py-12">
+  <div class="max-w-7xl mx-auto px-4 py-12">
     <h1 class="text-4xl font-bold mb-4">视频库</h1>
     <p class="text-gray-400 mb-8">昔涟相关的视频内容集合</p>
 
+    <!-- Category Filter -->
+    <div class="flex gap-3 mb-8 overflow-x-auto pb-4">
+      {videoCategories.map((cat) => (
+        <button 
+          class={`px-6 py-2 rounded-full whitespace-nowrap transition font-medium category-btn ${cat.id === 'all' ? 'bg-xilian-purple text-white' : 'bg-gray-800 hover:bg-gray-700 text-gray-300'}`}
+          data-category={cat.id}
+        >
+          {cat.name}
+        </button>
+      ))}
+    </div>
+
     <!-- Video Grid -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="video-grid">
       {videos.map((video) => (
-        <article class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-[1.02] transition">
+        <article class="video-item bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-750 transition hover:transform hover:scale-[1.02]" data-category={video.type}>
           <div class="relative aspect-video bg-gray-700">
             <img 
               src={video.thumbnail} 
               alt={video.title}
               class="w-full h-full object-cover"
             />
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 bg-xilian-purple/80 rounded-full flex items-center justify-center">
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition">
+              <div class="w-16 h-16 bg-xilian-purple/90 rounded-full flex items-center justify-center backdrop-blur-sm">
                 <span class="text-3xl">▶️</span>
               </div>
             </div>
-            <span class="absolute top-2 right-2 px-2 py-1 bg-black/70 rounded text-xs">
+            <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/80 rounded text-xs text-white">
+              {video.duration}
+            </div>
+            <span class="absolute top-2 right-2 px-3 py-1 bg-black/70 rounded text-xs font-medium">
               {typeLabels[video.type]}
             </span>
           </div>
-          <div class="p-4">
-            <h3 class="text-lg font-bold mb-2">{video.title}</h3>
-            <p class="text-gray-400 text-sm">{video.description}</p>
+          <div class="p-5">
+            <h3 class="text-xl font-bold mb-2 hover:text-xilian-purple transition">
+              <a href={`https://www.bilibili.com/video/${video.bvid}`} target="_blank">
+                {video.title}
+              </a>
+            </h3>
+            <p class="text-gray-400 text-sm mb-4 line-clamp-2">{video.description}</p>
+            <div class="flex items-center justify-between text-gray-500 text-sm mb-4">
+              <span class="flex items-center gap-1">
+                <span>📅</span>
+                {video.uploadDate}
+              </span>
+              <span class="flex items-center gap-3">
+                <span class="flex items-center gap-1">
+                  <span>👁️</span>
+                  {formatNumber(video.views)}
+                </span>
+                <span class="flex items-center gap-1">
+                  <span>❤️</span>
+                  {formatNumber(video.likes)}
+                </span>
+              </span>
+            </div>
             <a 
               href={`https://www.bilibili.com/video/${video.bvid}`}
               target="_blank"
-              class="inline-block mt-3 text-xilian-purple hover:underline text-sm"
+              class="inline-block w-full text-center px-6 py-2 bg-xilian-purple rounded-full hover:bg-xilian-purple/80 transition font-medium"
             >
               在B站观看 →
             </a>
@@ -100,13 +92,40 @@ const typeLabels: Record<string, string> = {
     </div>
 
     <!-- Notice -->
-    <div class="mt-12 p-6 bg-gray-800 rounded-xl">
-      <h3 class="text-lg font-bold mb-2">📌 观看说明</h3>
-      <ul class="text-gray-400 space-y-2">
+    <div class="mt-12 p-6 bg-gray-800/50 rounded-xl border border-gray-700">
+      <h3 class="text-lg font-bold mb-4 text-gray-300">📌 观看说明</h3>
+      <ul class="text-gray-400 space-y-2 text-sm">
         <li>• 点击视频封面可在B站观看完整视频</li>
         <li>• 视频内容版权归属米哈游及上传者</li>
         <li>• 如有侵权请联系删除</li>
+        <li>• 支持分类筛选，点击上方标签即可切换</li>
       </ul>
     </div>
   </div>
 </Layout>
+
+<script>
+  const categoryBtns = document.querySelectorAll('.category-btn');
+  const videoItems = document.querySelectorAll('.video-item');
+
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-category');
+      
+      categoryBtns.forEach(b => {
+        b.classList.remove('bg-xilian-purple', 'text-white');
+        b.classList.add('bg-gray-800', 'text-gray-300');
+      });
+      btn.classList.remove('bg-gray-800', 'text-gray-300');
+      btn.classList.add('bg-xilian-purple', 'text-white');
+      
+      videoItems.forEach(item => {
+        if (category === 'all' || item.getAttribute('data-category') === category) {
+          (item as HTMLElement).style.display = 'block';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

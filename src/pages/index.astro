@@ -1,24 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { news } from '../content/news';
+
+const baseUrl = import.meta.env.BASE_URL || '/';
+const base = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
 ---
 
 <Layout title="首页">
   <!-- Hero Section -->
   <section class="relative h-screen flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-b from-xilian-purple/20 to-gray-900"></div>
-    <div class="absolute inset-0 bg-[url('https://picsum.photos/1920/1080?random=1')] bg-cover bg-center opacity-30"></div>
+    <div class="absolute inset-0 bg-[url('/images/hero.webp')] bg-cover bg-center opacity-30"></div>
     
     <div class="relative z-10 text-center px-4">
       <h1 class="text-6xl md:text-8xl font-bold mb-4 bg-gradient-to-r from-xilian-purple via-xilian-pink to-xilian-blue bg-clip-text text-transparent">
         昔涟
       </h1>
-      <p class="text-2xl md:text-3xl text-gray-300 mb-8">Xilian</p>
-      <p class="text-lg text-gray-400 mb-12">来自星尘 · 阿尔林铎</p>
+      <p class="text-2xl md:text-3xl text-gray-300 mb-8">Cyrene</p>
+      <p class="text-lg text-gray-400 mb-12">往昔的涟漪 · 来自星尘</p>
       <div class="flex gap-4 justify-center">
-        <a href="/about" class="px-8 py-3 bg-xilian-purple rounded-full hover:bg-xilian-purple/80 transition">
+        <a href={`${base}about`} class="px-8 py-3 bg-xilian-purple rounded-full hover:bg-xilian-purple/80 transition font-medium">
           了解昔涟
         </a>
-        <a href="/gallery" class="px-8 py-3 border border-xilian-purple rounded-full hover:bg-xilian-purple/20 transition">
+        <a href={`${base}gallery`} class="px-8 py-3 border border-xilian-purple rounded-full hover:bg-xilian-purple/20 transition font-medium">
           查看图库
         </a>
       </div>
@@ -26,30 +30,30 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Features -->
-  <section class="max-w-6xl mx-auto px-4 py-20">
+  <section class="max-w-7xl mx-auto px-4 py-20">
     <h2 class="text-4xl font-bold text-center mb-12">网站导航</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <a href="/about" class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-700 transition group">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <a href={`${base}about`} class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-750 transition group">
         <div class="text-4xl mb-4">👤</div>
         <h3 class="text-xl font-bold mb-2 group-hover:text-xilian-purple">角色介绍</h3>
         <p class="text-gray-400">了解昔涟的背景故事、技能特性</p>
       </a>
-      <a href="/gallery" class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-700 transition group">
+      <a href={`${base}gallery`} class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-750 transition group">
         <div class="text-4xl mb-4">🖼️</div>
         <h3 class="text-xl font-bold mb-2 group-hover:text-xilian-purple">图片库</h3>
         <p class="text-gray-400">海量高清壁纸、表情包</p>
       </a>
-      <a href="/videos" class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-700 transition group">
+      <a href={`${base}videos`} class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-750 transition group">
         <div class="text-4xl mb-4">🎬</div>
         <h3 class="text-xl font-bold mb-2 group-hover:text-xilian-purple">视频库</h3>
         <p class="text-gray-400">角色演示、Cutscene 合集</p>
       </a>
-      <a href="/news" class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-700 transition group">
+      <a href={`${base}news`} class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-750 transition group">
         <div class="text-4xl mb-4">📰</div>
         <h3 class="text-xl font-bold mb-2 group-hover:text-xilian-purple">最新资讯</h3>
         <p class="text-gray-400">官方动态、活动信息</p>
       </a>
-      <a href="/community" class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-700 transition group">
+      <a href={`${base}community`} class="block p-8 bg-gray-800 rounded-2xl hover:bg-gray-750 transition group">
         <div class="text-4xl mb-4">💬</div>
         <h3 class="text-xl font-bold mb-2 group-hover:text-xilian-purple">粉丝社区</h3>
         <p class="text-gray-400">交流讨论、粉丝创作</p>
@@ -64,36 +68,66 @@ import Layout from '../layouts/Layout.astro';
 
   <!-- Latest News Preview -->
   <section class="bg-gray-800/50 py-20">
-    <div class="max-w-6xl mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between items-center mb-12">
         <h2 class="text-4xl font-bold">最新资讯</h2>
-        <a href="/news" class="text-xilian-purple hover:underline">查看全部 →</a>
+        <a href={`${base}news`} class="text-xilian-purple hover:underline font-medium">查看全部 →</a>
       </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        {news.slice(0, 3).map((item, index) => (
+          <article class="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-750 transition hover:transform hover:scale-[1.02]">
+            <div class="h-48 bg-gradient-to-br from-xilian-purple/30 to-xilian-pink/30"></div>
+            <div class="p-6">
+              <div class="flex items-center gap-3 mb-3">
+                <span class={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  item.category === '攻略' ? 'bg-green-600' :
+                  item.category === '活动' ? 'bg-yellow-600' :
+                  item.category === '二创' ? 'bg-pink-600' : 'bg-blue-600'
+                }`}>
+                  {item.category}
+                </span>
+                <span class="text-gray-400 text-sm flex items-center gap-1">
+                  <span>📅</span>
+                  {item.date}
+                </span>
+              </div>
+              <h3 class="text-lg font-bold mb-2 hover:text-xilian-purple transition">
+                <a href="#">{item.title}</a>
+              </h3>
+              <p class="text-gray-400 text-sm line-clamp-2">{item.excerpt}</p>
+              <a 
+                href="#" 
+                class="inline-block mt-3 text-xilian-purple hover:underline text-sm font-medium"
+              >
+                阅读更多 →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links -->
+  <section class="bg-gradient-to-r from-xilian-purple/10 to-xilian-pink/10 py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12">快速链接</h2>
       <div class="grid md:grid-cols-3 gap-6">
-        <article class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-[1.02] transition">
-          <div class="h-48 bg-gradient-to-br from-xilian-purple to-xilian-pink"></div>
-          <div class="p-6">
-            <span class="text-sm text-gray-400">2026-03-01</span>
-            <h3 class="text-lg font-bold mt-2 mb-3">昔涟角色攻略</h3>
-            <p class="text-gray-400 text-sm">全面解析昔涟的技能机制与配队建议...</p>
-          </div>
-        </article>
-        <article class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-[1.02] transition">
-          <div class="h-48 bg-gradient-to-br from-xilian-blue to-xilian-purple"></div>
-          <div class="p-6">
-            <span class="text-sm text-gray-400">2026-02-15</span>
-            <h3 class="text-lg font-bold mt-2 mb-3">来自星尘 4.0 版本</h3>
-            <p class="text-gray-400 text-sm">新版本带来全新剧情与角色...</p>
-          </div>
-        </article>
-        <article class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-[1.02] transition">
-          <div class="h-48 bg-gradient-to-br from-xilian-pink to-xilian-blue"></div>
-          <div class="p-6">
-            <span class="text-sm text-gray-400">2026-02-01</span>
-            <h3 class="text-lg font-bold mt-2 mb-3">阿尔林铎探索指南</h3>
-            <p class="text-gray-400 text-sm">新地图探索要点与隐藏要素...</p>
-          </div>
-        </article>
+        <a href="https://www.miyoushe.com/sr/" target="_blank" class="bg-gray-800 rounded-xl p-8 hover:bg-gray-750 transition text-center">
+          <div class="text-4xl mb-4">💬</div>
+          <h3 class="text-xl font-bold mb-2">米游社官方</h3>
+          <p class="text-gray-400">前往米游社社区</p>
+        </a>
+        <a href="https://genshin.hoyoverse.com/" target="_blank" class="bg-gray-800 rounded-xl p-8 hover:bg-gray-750 transition text-center">
+          <div class="text-4xl mb-4">🌐</div>
+          <h3 class="text-xl font-bold mb-2">米哈游官网</h3>
+          <p class="text-gray-400">访问米哈游官方网站</p>
+        </a>
+        <a href="https://www.bilibili.com" target="_blank" class="bg-gray-800 rounded-xl p-8 hover:bg-gray-750 transition text-center">
+          <div class="text-4xl mb-4">📺</div>
+          <h3 class="text-xl font-bold mb-2">B站观看</h3>
+          <p class="text-gray-400">观看官方视频内容</p>
+        </a>
       </div>
     </div>
   </section>
