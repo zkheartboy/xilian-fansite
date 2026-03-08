@@ -4,7 +4,7 @@
 
 ## 🏠 在线预览
 
-网站部署后访问：`https://xilian-fans.github.io/xilian-fansite/`
+网站部署后访问：`https://zkheartboy.github.io/xilian-fansite/`
 
 ## 🚀 快速开始
 
