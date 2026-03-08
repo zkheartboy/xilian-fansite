@@ -55,7 +55,33 @@ export const images: ImageItem[] = [
   { id: 37, category: 'fanart', src: '/images/gallery/xilian_miyoushe_17.png', title: '粉丝作品 - 昔涟17', width: 500, height: 500 },
   { id: 38, category: 'fanart', src: '/images/gallery/xilian_miyoushe_18.png', title: '粉丝作品 - 昔涟18', width: 500, height: 500 },
   { id: 39, category: 'fanart', src: '/images/gallery/xilian_miyoushe_19.jpg', title: '粉丝作品 - 昔涟19', width: 500, height: 500 },
-  { id: 40, category: 'fanart', src: '/images/gallery/xilian_miyoushe_20.jpg', title: '粉丝作品 - 昔涟20', width: 500, height: 500 }
+  { id: 40, category: 'fanart', src: '/images/gallery/xilian_miyoushe_20.jpg', title: '粉丝作品 - 昔涟20', width: 500, height: 500 },
+  
+  // 3.7版本直播 (livestream)
+  { id: 41, category: 'livestream', src: '/images/gallery/sr_live_1.jpg', title: '3.7直播 - 昔涟1', width: 500, height: 500 },
+  { id: 42, category: 'livestream', src: '/images/gallery/sr_live_2.jpg', title: '3.7直播 - 昔涟2', width: 500, height: 500 },
+  { id: 43, category: 'livestream', src: '/images/gallery/sr_live_3.jpg', title: '3.7直播 - 昔涟3', width: 500, height: 500 },
+  { id: 44, category: 'livestream', src: '/images/gallery/sr_live_4.jpg', title: '3.7直播 - 昔涟4', width: 500, height: 500 },
+  { id: 45, category: 'livestream', src: '/images/gallery/sr_live_5.jpg', title: '3.7直播 - 昔涟5', width: 500, height: 500 },
+  { id: 46, category: 'livestream', src: '/images/gallery/sr_live_6.jpg', title: '3.7直播 - 昔涟6', width: 500, height: 500 },
+  { id: 47, category: 'livestream', src: '/images/gallery/sr_live_7.jpg', title: '3.7直播 - 昔涟7', width: 500, height: 500 },
+  { id: 48, category: 'livestream', src: '/images/gallery/sr_live_8.jpg', title: '3.7直播 - 昔涟8', width: 500, height: 500 },
+  { id: 49, category: 'livestream', src: '/images/gallery/sr_live_9.jpg', title: '3.7直播 - 昔涟9', width: 500, height: 500 },
+  { id: 50, category: 'livestream', src: '/images/gallery/sr_live_10.jpg', title: '3.7直播 - 昔涟10', width: 500, height: 500 },
+  { id: 51, category: 'livestream', src: '/images/gallery/sr_live_11.jpg', title: '3.7直播 - 昔涟11', width: 500, height: 500 },
+  { id: 52, category: 'livestream', src: '/images/gallery/sr_live_12.jpg', title: '3.7直播 - 昔涟12', width: 500, height: 500 },
+  { id: 53, category: 'livestream', src: '/images/gallery/sr_live_13.jpg', title: '3.7直播 - 昔涟13', width: 500, height: 500 },
+  { id: 54, category: 'livestream', src: '/images/gallery/sr_live_14.jpg', title: '3.7直播 - 昔涟14', width: 500, height: 500 },
+  { id: 55, category: 'livestream', src: '/images/gallery/sr_live_15.jpg', title: '3.7直播 - 昔涟15', width: 500, height: 500 },
+  { id: 56, category: 'livestream', src: '/images/gallery/sr_live_16.jpg', title: '3.7直播 - 昔涟16', width: 500, height: 500 },
+  { id: 57, category: 'livestream', src: '/images/gallery/sr_live_17.png', title: '3.7直播 - 昔涟17', width: 500, height: 500 },
+  { id: 58, category: 'livestream', src: '/images/gallery/sr_live_18.png', title: '3.7直播 - 昔涟18', width: 500, height: 500 },
+  { id: 59, category: 'livestream', src: '/images/gallery/sr_live_19.png', title: '3.7直播 - 昔涟19', width: 500, height: 500 },
+  { id: 60, category: 'livestream', src: '/images/gallery/sr_live_20.png', title: '3.7直播 - 昔涟20', width: 500, height: 500 },
+  { id: 61, category: 'livestream', src: '/images/gallery/sr_live_22.jpg', title: '3.7直播 - 昔涟21', width: 500, height: 500 },
+  { id: 62, category: 'livestream', src: '/images/gallery/sr_live_23.png', title: '3.7直播 - 昔涟22', width: 500, height: 500 },
+  { id: 63, category: 'livestream', src: '/images/gallery/sr_live_24.png', title: '3.7直播 - 昔涟23', width: 500, height: 500 },
+  { id: 64, category: 'livestream', src: '/images/gallery/sr_live_25.png', title: '3.7直播 - 昔涟24', width: 500, height: 500 }
 ];
 
 export const categories = [
@@ -63,5 +89,6 @@ export const categories = [
   { id: 'character', name: '角色' },
   { id: 'wallpaper', name: '壁纸' },
   { id: 'meme', name: '表情包' },
-  { id: 'fanart', name: '粉丝作品' }
+  { id: 'fanart', name: '粉丝作品' },
+  { id: 'livestream', name: '版本直播' }
 ];
