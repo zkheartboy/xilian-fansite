@@ -121,6 +121,7 @@ else
   append_log "```"
   tail -80 /tmp/xilian-build.log >> "$LOG_FILE" || true
   append_log "```"
+  echo "autonomous_dev: BUILD_FAIL"
   exit 1
 fi
 
@@ -130,8 +131,10 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
   git commit -m "feat: autonomous hourly iteration" >/tmp/xilian-git.log 2>&1 || true
   git push >/tmp/xilian-push.log 2>&1 || true
   append_log "- Git：已提交并尝试推送"
+  echo "autonomous_dev: BUILD_OK changed=1 image_count=${IMAGE_COUNT} video_links=${VIDEO_LINKS} audio_links=${AUDIO_LINKS}"
 else
   append_log "- Git：本轮无代码变更"
+  echo "autonomous_dev: BUILD_OK changed=0 image_count=${IMAGE_COUNT} video_links=${VIDEO_LINKS} audio_links=${AUDIO_LINKS}"
 fi
 
 append_log ""
